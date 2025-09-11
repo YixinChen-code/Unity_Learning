@@ -39,8 +39,27 @@ class Program
 dotnet run
 ```
 应输出：Hello, C#
+  
+第 4 步：做任务 2（变量与插值）
 
+继续编辑同一个 Program.cs，替换为：
+```
+using System;
 
+class Program
+{
+    static void Main(string[] args)
+    {
+        int age = 20;
+        double score = 92.5;
+        bool isStudent = true;
+        string name = "Jerry";
+
+        Console.WriteLine($"Name: {name}, Age: {age}, Score: {score}, IsStudent: {isStudent}");
+    }
+}
+```
+运行 dotnet run，观察输出是否包含四个变量值。
 
 
 
