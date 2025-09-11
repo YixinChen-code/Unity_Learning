@@ -6,7 +6,7 @@ mkdir CSharpPractice
 cd CSharpPractice
 dotnet new console -n Basics
 code .
-第一次执行完后，VS Code 会打开 Basics 这个项目文件夹。
+第一次执行完后，VS Code 会打开 Basics 这个项目文件夹。;
 如果提示 “是否信任该文件夹”，点 Trust。
 第 2 步：运行默认模板（确认环境OK）
 在 VS Code 资源管理器里打开 Program.cs。
