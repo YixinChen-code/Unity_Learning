@@ -86,8 +86,42 @@ class Program
 ##（选做）VS Code 里更方便的运行方式
 左侧 Run and Debug（运行与调试） ▶️ → 选择 .NET → Run。
 或者在 Program.cs 顶部出现的 Run/Debug 按钮直接点击。
+  
+任务 4：条件 & switch（成绩等级）
+```
+using System;
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.Write("请输入成绩(0~100): ");
+        string? line = Console.ReadLine();
 
+        if (!int.TryParse(line, out int score) || score < 0 || score > 100)
+        {
+            Console.WriteLine("输入无效");
+            return;
+        }
 
+        // if-else 版本
+        string level;
+        if (score >= 90) level = "优秀";
+        else if (score >= 80) level = "良好";
+        else if (score >= 60) level = "及格";
+        else level = "不及格";
+        Console.WriteLine($"if-else 判定：{level}");
 
+        // switch 表达式版本（C# 8+）
+        string level2 = score switch
+        {
+            >= 90 => "优秀",
+            >= 80 => "良好",
+            >= 60 => "及格",
+            _ => "不及格"
+        };
+        Console.WriteLine($"switch 判定：{level2}");
+    }
+}
+```
 
 
