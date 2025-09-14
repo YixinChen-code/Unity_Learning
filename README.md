@@ -157,4 +157,40 @@ class Program
     }
 }
 ```
+任务 7：文件读写（File I/O）
+```
+using System;
+using System.IO;
+using System.Text;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        // 建议写到项目目录下的 data 子文件夹
+        string dir = Path.Combine(Directory.GetCurrentDirectory(), "data");
+        Directory.CreateDirectory(dir);
+
+        string path = Path.Combine(dir, "note.txt");
+        string content = "Hello File\n这是写入文件的内容。";
+
+        // 写入（UTF-8）
+        File.WriteAllText(path, content, new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
+        Console.WriteLine($"已写入：{path}");
+
+        // 读取
+        string readBack = File.ReadAllText(path, Encoding.UTF8);
+        Console.WriteLine("读取内容：");
+        Console.WriteLine(readBack);
+
+        // 追加写入
+        File.AppendAllText(path, "\n—— 这是一行追加内容", Encoding.UTF8);
+        Console.WriteLine("已追加一行，再次读取：");
+        Console.WriteLine(File.ReadAllText(path, Encoding.UTF8));
+    }
+}
+```
+
+运行后，在项目目录会生成 data/note.txt。
+
 
