@@ -193,4 +193,25 @@ class Program
 
 运行后，在项目目录会生成 data/note.txt。
 
+任务 8：字符串清理（正则与空白去除）
+```
+using System;
+using System.Text.RegularExpressions;
 
+class Program
+{
+    static void Main(string[] args)
+    {
+        string raw = "  A  B \n C\t ";
+        // 去掉所有空白字符（空格、换行、制表符等）
+        string cleaned = Regex.Replace(raw, @"\s+", "");
+
+        Console.WriteLine($"原始: [{raw}]");
+        Console.WriteLine($"清理: [{cleaned}]"); // 期望输出: [ABC]
+
+        // 如果只想去掉两端空白（保留中间空格），用 Trim():
+        string onlyTrim = raw.Trim();
+        Console.WriteLine($"仅去两端空白: [{onlyTrim}]");
+    }
+}
+```
