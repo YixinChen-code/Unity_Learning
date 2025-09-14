@@ -276,7 +276,8 @@ class Program
 阶段 5：网络编程基础（C# 控制台）
 
 端口可改：9000。先运行服务器，再运行客户端。记得这里是两个项目哦，在一个电脑上，创建两个项目去运行。
-![Uploading b9ce3988-df3b-405d-b164-e40364412f28.png…]()
+<img width="2526" height="1503" alt="84843e54-7696-49f5-98aa-e3a517c7fc27" src="https://github.com/user-attachments/assets/706a6439-92a4-412f-83cb-5a0b337c893e" />
+
 <img width="2529" height="1341" alt="f714ab24-042b-4de5-b909-66f7d841d8e8" src="https://github.com/user-attachments/assets/37c97bed-3aa4-45df-8494-a5cb8ada15a9" />
 
 5.1 简易 TCP 服务器（打印客户端消息）
