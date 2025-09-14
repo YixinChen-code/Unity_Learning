@@ -217,6 +217,7 @@ class Program
 ```
 ## 下一阶段从4开始，算是任务9往后依次：
 4.1 每秒打印一次“Hello”，持续 5 秒
+```
 using System;
 using System.Threading.Tasks;
 
@@ -237,3 +238,40 @@ class Program
         Console.WriteLine("Done.");
     }
 }
+```
+4.2 并行执行两个任务（求和 & 倒计时）
+```
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+
+class Program
+{
+    static async Task<int> Sum1To100()
+    {
+        // 模拟计算任务
+        return await Task.Run(() => Enumerable.Range(1, 100).Sum());
+    }
+
+    static async Task Countdown()
+    {
+        for (int i = 100; i >= 1; i--)
+        {
+            Console.Write($"{i} ");
+            await Task.Delay(10); // 调小延迟，演示更快
+        }
+        Console.WriteLine();
+    }
+
+    static async Task Main()
+    {
+        Task<int> sumTask = Sum1To100();
+        Task countdownTask = Countdown();
+
+        await Task.WhenAll(sumTask, countdownTask);
+        Console.WriteLine($"Sum(1..100) = {sumTask.Result}");
+    }
+}
+```
+
+
