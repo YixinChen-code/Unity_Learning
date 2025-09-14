@@ -124,4 +124,37 @@ class Program
 }
 ```
 
+任务 6：方法与类
+```
+using System;
+
+class Person
+{
+    public string Name = "";
+    public int Age;
+
+    public void Introduce()
+    {
+        Console.WriteLine($"Hi, I am {Name}, {Age} years old.");
+    }
+}
+
+class Program
+{
+    // 有返回值的方法
+    static int Add(int a, int b) => a + b;
+
+    // 无返回值的方法
+    static void SayHello(string name) => Console.WriteLine($"Hello, {name}");
+
+    static void Main(string[] args)
+    {
+        Console.WriteLine($"3 + 5 = {Add(3, 5)}");
+        SayHello("Jerry");
+
+        var p = new Person { Name = "Alice", Age = 22 };
+        p.Introduce();
+    }
+}
+```
 
