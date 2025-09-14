@@ -215,3 +215,25 @@ class Program
     }
 }
 ```
+## 下一阶段从4开始，算是任务9往后依次：
+4.1 每秒打印一次“Hello”，持续 5 秒
+using System;
+using System.Threading.Tasks;
+
+class Program
+{
+    static async Task HelloLoop()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] Hello");
+            await Task.Delay(1000);
+        }
+    }
+
+    static async Task Main()
+    {
+        await HelloLoop();
+        Console.WriteLine("Done.");
+    }
+}
