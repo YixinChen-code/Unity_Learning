@@ -335,4 +335,126 @@ class SimpleTcpClient
     }
 }
 ```
+阶段六：用“完全零基础”的方式，在 Unity 里把这 3 个脚本跑起来。  
+  
+0）安装与创建工程：
+安装 Unity Hub → 在 Hub 里安装一个 LTS 版本（比如 2022/2023 LTS）。
+Hub 里点 New Project → 模板选 2D（Core/URP 都行） → 取名 UnityUIPractice → Create。
+  
+1）认识场景与层级
+打开后，左侧 Hierarchy 是场景中的物体列表，中央是 Scene 视图。
+UI 元素（Button/Image）会自动创建一个 Canvas（画布）和 EventSystem（负责点击事件）。
+  
+2）创建 UI：
+在 Hierarchy 空白处右键 → UI → Button。
+Unity 会自动创建：Canvas、EventSystem、Button。
+右键 Canvas → UI → Image，得到一个 Image 方块。
+选中 Image，在右侧 Inspector 面板里：
+Rect Transform 调一下位置/大小（随意）。
+Image（组件） 里把 Color 改为 黑色（让闪烁更明显）。
+小提示：选 Canvas，查看 Canvas Scaler，把 UI Scale Mode 设成 Scale With Screen Size，分辨率随窗口变化更舒服。
+  
+3）创建脚本（C#）
+在 Project 面板（下方）右键 → Create → C# Script，命名：
+PrintOnClick  
+BlinkImage  
+ToggleImageColor  
+双击脚本在编辑器里打开，把你发的代码分别完整替换进去，保存（Ctrl+S）。
+  
+4）把脚本挂到物体上（Add Component）
+我们做一个最小场景：一个 Image + 两个 Button。
+BlinkImage（控制闪烁） 
+在 Hierarchy 里右键 → Create Empty，改名 UIController。    
+选中 UIController → Inspector → Add Component → 搜索 BlinkImage 添加。  
+在 BlinkImage 组件里，把 Target 字段拖拽为你创建的 Image。
+频率 frequency、时长 duration 保持默认即可。
+ToggleImageColor（红/黑切换）
+仍在 UIController 上 Add Component → 搜索 ToggleImageColor 添加。
+把 Target 字段也拖 Image 过去。
+PrintOnClick（按钮打印）
+选择 Button，Add Component → 搜索 PrintOnClick 添加到 Button 上。
+  
+5）连按钮事件（OnClick）
+选中第一个 Button，Inspector → Button（Script） → On Click() 区域：
+点 “+” 新增一行。
+把 UIController 拖到那一行的空物体槽里。
+右侧函数下拉框选：BlinkImage → StartBlink() 。
+这个按钮就成了“开始闪烁”按钮。
+复制这个 Button（Ctrl+D），拖到旁边作为第二个按钮：
+On Click() 里把对象仍然设为 UIController。
+右侧函数选择：ToggleImageColor → ToggleColor()。
+这个按钮就是“红/黑切换”按钮。
+想测试打印功能的话，在任意一个 Button 的 OnClick() 再加一行：
+这次把对象设为Button 自己（或把 UIController 上添加 PrintOnClick 也行）。
+选择 PrintOnClick → OnButtonClicked()。
+OnClick 可以加多行回调；一个按钮既能触发闪烁，又能打印日志。
+  
+6）运行
+顶部点击 Play ▶。
+点“开始闪烁”按钮：Image 在黑白之间正弦闪烁，持续 duration 秒后回到黑色。
+点“红/黑切换”按钮：Image 在红色和黑色之间切换。
+看 Console 面板（Window → General → Console），能看到 "Button Clicked" 日志。
 
+```BlinkImage
+using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
+
+public class BlinkImage : MonoBehaviour
+{
+    public Image target;
+    public float frequency = 10f; // Hz
+    public float duration = 10f;
+
+    public void StartBlink()
+    {
+        StopAllCoroutines();
+        StartCoroutine(Blink());
+    }
+
+    private IEnumerator Blink()
+    {
+        if (target == null) yield break;
+
+        float t = 0f;
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            float v = 0.5f * (1 + Mathf.Sin(2 * Mathf.PI * frequency * t)); // <- Mathf
+            target.color = Color.Lerp(Color.black, Color.white, v);
+            yield return null;
+        }
+        target.color = Color.black;
+    }
+}
+```
++++
+```PrintOnClick
+using UnityEngine;
+
+public class PrintOnClick : MonoBehaviour
+{
+    public void OnButtonClicked()
+    {
+        Debug.Log("Button Clicked");
+    }
+}
+```
++++
+```ToggleImageColor
+using UnityEngine;
+using UnityEngine.UI;
+
+public class ToggleImageColor : MonoBehaviour
+{
+    public Image target;
+    private bool isRed = false;
+
+    public void ToggleColor()
+    {
+        if (target == null) return;
+        isRed = !isRed;
+        target.color = isRed ? Color.red : Color.black;
+    }
+}
+```
